@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.drools.definition.process.Process;
+import org.jboss.bpm.console.client.model.NodeInstanceRef;
 import org.jboss.bpm.console.client.model.ProcessDefinitionRef;
 import org.jboss.bpm.console.client.model.ProcessInstanceRef;
 import org.jboss.bpm.console.client.model.ProcessInstanceRef.RESULT;
 import org.jboss.bpm.console.client.model.ProcessInstanceRef.STATE;
+import org.jbpm.process.audit.NodeInstanceLog;
 import org.jbpm.process.audit.ProcessInstanceLog;
 
 public class ProcessManagement implements org.jboss.bpm.console.server.integration.ProcessManagement {
@@ -76,6 +78,15 @@ public class ProcessManagement implements org.jboss.bpm.console.server.integrati
 		List<ProcessInstanceRef> result = new ArrayList<ProcessInstanceRef>();
 		for (ProcessInstanceLog processInstance: processInstances) {
 			result.add(Transform.processInstance(processInstance));
+		}
+		return result;
+	}
+	
+	public List<NodeInstanceRef> getNodeInstances(String processInstanceId) {
+		List<NodeInstanceLog> nodeInstances = delegate.getNodeInstanceLogsByProcessInstanceId(processInstanceId);
+		List<NodeInstanceRef> result = new ArrayList<NodeInstanceRef>();
+		for (NodeInstanceLog nodeInstance: nodeInstances) {
+			result.add(Transform.nodeInstance(nodeInstance));
 		}
 		return result;
 	}
