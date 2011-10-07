@@ -68,6 +68,7 @@ import org.drools.runtime.process.ProcessRuntimeFactory;
 import org.jbpm.bpmn2.BPMN2ProcessProviderImpl;
 import org.jbpm.integration.console.shared.GuvnorConnectionUtils;
 import org.jbpm.marshalling.impl.ProcessMarshallerFactoryServiceImpl;
+import org.jbpm.process.audit.NodeInstanceLog;
 import org.jbpm.process.audit.ProcessInstanceDbLog;
 import org.jbpm.process.audit.ProcessInstanceLog;
 import org.jbpm.process.audit.WorkingMemoryDbLogger;
@@ -296,6 +297,10 @@ public class CommandDelegate {
     
     public List<ProcessInstanceLog> getInactiveProcessInstanceLogsByProcessId(String processId) {
         return ProcessInstanceDbLog.findInactiveProcessInstances(processId);
+    }
+    
+    public List<NodeInstanceLog> getNodeInstanceLogsByProcessInstanceId(String processInstanceId) {
+    	return ProcessInstanceDbLog.findNodeInstances(new Long(processInstanceId));
     }
     
     public ProcessInstanceLog startProcess(String processId, Map<String, Object> parameters) {
