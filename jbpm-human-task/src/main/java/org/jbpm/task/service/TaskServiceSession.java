@@ -513,6 +513,13 @@ public class TaskServiceSession {
         return (Task) task.getSingleResult();
     }
 
+    public List<Task> getTasksByProcessInstanceId(final long processInstanceId) {
+        final Query tasks = em.createNamedQuery("TasksByProcessInstanceId");
+        tasks.setParameter("processInstanceId", processInstanceId);
+
+        return (List<Task>) tasks.getResultList();
+    }
+
     public List<TaskSummary> getTasksOwned(final String userId, final String language) {
         final Query tasksOwned = em.createNamedQuery("TasksOwned");
         tasksOwned.setParameter("userId", userId);
